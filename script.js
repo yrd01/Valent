@@ -1,5 +1,5 @@
 document.getElementById("yes").addEventListener("click", () => {
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 20; i++) {
         createHeart();
     }
 });
@@ -10,10 +10,12 @@ function createHeart() {
     heart.innerHTML = "❤️";
     document.body.appendChild(heart);
 
-    const size = Math.random() * 20 + 10; // Wielkość serca (10-30px)
-    const startX = Math.random() * window.innerWidth; // Losowa pozycja startowa
+    const size = Math.random() * 30 + 20; // Wielkość serc 20-50px
+    const startX = Math.random() * window.innerWidth; // Losowa pozycja startowa X
+    const startY = Math.random() * window.innerHeight; // Losowa pozycja startowa Y
 
     heart.style.left = `${startX}px`;
+    heart.style.top = `${startY}px`;
     heart.style.fontSize = `${size}px`;
 
     const animationDuration = Math.random() * 2 + 3; // 3-5 sekund
