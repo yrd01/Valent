@@ -10,7 +10,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url("photo1.jpg") no-repeat center center/cover;
+    background: url("20240809_225409.jpg") no-repeat center center/cover;
     overflow: hidden; /* Usuwa scrollowanie */
     position: relative;
 }
