@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const buttonsContainer = document.querySelector(".buttons");
     const background = document.querySelector(".background");
 
+    let noSize = 1; // Początkowy rozmiar "Nie"
+    let yesSize = 1; // Początkowy rozmiar "Tak"
+
     // Kliknięcie "Tak" - zmiana tła i napisu
     yesButton.addEventListener("click", () => {
         title.textContent = "KOCHAM CIĘ ❤️";
@@ -21,39 +24,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // PRZYCISK "NIE" - UCIEKA, ALE NIE WYCHODZI POZA EKRAN
+    // Po najechaniu na "Nie" - zmniejsza się płynnie
     noButton.addEventListener("mouseenter", () => {
-        const buttonWidth = noButton.offsetWidth;
-        const buttonHeight = noButton.offsetHeight;
+        noSize *= 0.8; // Zmniejsz rozmiar o 20%
+        noSize = Math.max(0.3, noSize); // Nie pozwól, by był mniejszy niż 30% oryginalnego rozmiaru
+        noButton.style.transition = "transform 0.3s ease-in-out";
+        noButton.style.transform = `scale(${noSize})`;
+    });
 
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-
-        let maxX = viewportWidth - buttonWidth - 20;
-        let maxY = viewportHeight - buttonHeight - 20;
-
-        let randomX = Math.random() * maxX;
-        let randomY = Math.random() * maxY;
-
-        const rect = noButton.getBoundingClientRect();
-        const oldX = rect.left;
-        const oldY = rect.top;
-
-        // Unikanie minimalnych ruchów
-        if (Math.abs(randomX - oldX) < 50) {
-            randomX = (randomX + 80) % maxX;
-        }
-        if (Math.abs(randomY - oldY) < 50) {
-            randomY = (randomY + 80) % maxY;
-        }
-
-        // Zapobieganie wyjściu poza ekran
-        randomX = Math.max(10, Math.min(randomX, maxX));
-        randomY = Math.max(10, Math.min(randomY, maxY));
-
-        noButton.style.position = "absolute";
-        noButton.style.left = `${randomX}px`;
-        noButton.style.top = `${randomY}px`;
+    // Po najechaniu na "Tak" - rośnie płynnie
+    yesButton.addEventListener("mouseenter", () => {
+        yesSize *= 1.2; // Powiększ o 20%
+        yesSize = Math.min(2, yesSize); // Nie pozwól, by był większy niż 200% oryginalnego rozmiaru
+        yesButton.style.transition = "transform 0.3s ease-in-out";
+        yesButton.style.transform = `scale(${yesSize})`;
     });
 
     // Funkcja do latających serc
