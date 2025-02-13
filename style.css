@@ -20,7 +20,7 @@ body {
     height: 100%;
     background: url("20240809_225409.jpg") no-repeat center center/cover;
     z-index: -1;
-    transition: opacity 0.5s;
+    transition: opacity 1s;
 }
 
 .container {
@@ -65,8 +65,8 @@ button {
     color: red;
     opacity: 0.8;
     pointer-events: none;
-    font-size: 30px;
-    animation: floatUp 5s ease-in-out forwards, rotate 4s linear infinite;
+    font-size: 50px; /* Większe serca */
+    animation: floatUp 6s ease-in-out forwards, rotate 4s linear infinite;
 }
 
 @keyframes floatUp {
@@ -78,7 +78,7 @@ button {
         opacity: 0.8;
     }
     100% {
-        transform: translateY(-100vh) scale(0.5);
+        transform: translateY(-100vh) scale(0.8);
         opacity: 0;
     }
 }
