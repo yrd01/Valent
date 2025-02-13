@@ -12,12 +12,15 @@ document.getElementById("yes").addEventListener("click", () => {
     }
 });
 
-// PRZYCISK "NIE" UCIEKA
+// PRZYCISK "NIE" UCIEKA ALE NIE WYCHODZI POZA EKRAN
 const noButton = document.getElementById("no");
 
 noButton.addEventListener("mouseover", () => {
-    const maxX = window.innerWidth - noButton.clientWidth;
-    const maxY = window.innerHeight - noButton.clientHeight;
+    const buttonWidth = noButton.clientWidth;
+    const buttonHeight = noButton.clientHeight;
+    
+    const maxX = window.innerWidth - buttonWidth - 10; // -10, żeby nie dotykało brzegu
+    const maxY = window.innerHeight - buttonHeight - 10;
 
     const randomX = Math.random() * maxX;
     const randomY = Math.random() * maxY;
@@ -34,8 +37,8 @@ function createHeart() {
     document.body.appendChild(heart);
 
     const size = Math.random() * 50 + 30; // Większe serca 30-80px
-    const startX = Math.random() * window.innerWidth;
-    const startY = Math.random() * window.innerHeight;
+    const startX = Math.random() * (window.innerWidth - size); // Żeby nie wychodziły poza ekran
+    const startY = Math.random() * (window.innerHeight - size);
 
     heart.style.left = `${startX}px`;
     heart.style.top = `${startY}px`;
