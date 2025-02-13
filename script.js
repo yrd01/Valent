@@ -1,13 +1,30 @@
 document.getElementById("yes").addEventListener("click", () => {
+    // Zmiana tła na drugie zdjęcie
     document.querySelector(".background").style.opacity = "0";
     setTimeout(() => {
         document.querySelector(".background").style.background = "url('20240809_213832.jpg') no-repeat center center/cover";
         document.querySelector(".background").style.opacity = "1";
-    }, 500);
+    }, 1000);
 
-    for (let i = 0; i < 20; i++) {
+    // Tworzenie większej ilości serc
+    for (let i = 0; i < 30; i++) {
         createHeart();
     }
+});
+
+// PRZYCISK "NIE" UCIEKA
+const noButton = document.getElementById("no");
+
+noButton.addEventListener("mouseover", () => {
+    const maxX = window.innerWidth - noButton.clientWidth;
+    const maxY = window.innerHeight - noButton.clientHeight;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    noButton.style.position = "absolute";
+    noButton.style.left = `${randomX}px`;
+    noButton.style.top = `${randomY}px`;
 });
 
 function createHeart() {
@@ -16,7 +33,7 @@ function createHeart() {
     heart.innerHTML = "❤️";
     document.body.appendChild(heart);
 
-    const size = Math.random() * 30 + 20;
+    const size = Math.random() * 50 + 30; // Większe serca 30-80px
     const startX = Math.random() * window.innerWidth;
     const startY = Math.random() * window.innerHeight;
 
