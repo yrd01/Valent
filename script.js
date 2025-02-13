@@ -12,18 +12,27 @@ document.getElementById("yes").addEventListener("click", () => {
     }
 });
 
-// PRZYCISK "NIE" UCIEKA ALE NIE WYCHODZI POZA EKRAN
+// PRZYCISK "NIE" UCIEKA I NIE WYCHODZI POZA EKRAN NA TELEFONIE
 const noButton = document.getElementById("no");
 
 noButton.addEventListener("mouseover", () => {
-    const buttonWidth = noButton.clientWidth;
-    const buttonHeight = noButton.clientHeight;
+    const buttonWidth = noButton.offsetWidth;
+    const buttonHeight = noButton.offsetHeight;
     
-    const maxX = window.innerWidth - buttonWidth - 10; // -10, żeby nie dotykało brzegu
-    const maxY = window.innerHeight - buttonHeight - 10;
+    const maxX = window.innerWidth - buttonWidth - 20; // -20 żeby mieć margines
+    const maxY = window.innerHeight - buttonHeight - 20;
 
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
+    let randomX = Math.random() * maxX;
+    let randomY = Math.random() * maxY;
+
+    // Sprawdzamy, czy nowa pozycja nie jest za blisko aktualnej
+    const rect = noButton.getBoundingClientRect();
+    if (Math.abs(randomX - rect.left) < 50) randomX += 50;
+    if (Math.abs(randomY - rect.top) < 50) randomY += 50;
+
+    // Upewniamy się, że nie przekraczamy ekranu
+    randomX = Math.min(randomX, maxX);
+    randomY = Math.min(randomY, maxY);
 
     noButton.style.position = "absolute";
     noButton.style.left = `${randomX}px`;
