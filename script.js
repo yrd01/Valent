@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const buttonsContainer = document.querySelector(".buttons");
     const background = document.querySelector(".background");
 
-    // Zmiana napisu i tła po kliknięciu "Tak"
+    // Kliknięcie "Tak" - zmiana tła i napisu
     yesButton.addEventListener("click", () => {
         title.textContent = "KOCHAM CIĘ ❤️";
         buttonsContainer.style.display = "none"; 
@@ -21,13 +21,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // PRZYCISK "NIE" – UCIEKA I ZAWSZE ZMIENIA POZYCJĘ
+    // PRZYCISK "NIE" - UCIEKA, ALE NIE WYCHODZI POZA EKRAN
     noButton.addEventListener("mouseenter", () => {
         const buttonWidth = noButton.offsetWidth;
         const buttonHeight = noButton.offsetHeight;
-        
-        const maxX = window.innerWidth - buttonWidth - 10;
-        const maxY = window.innerHeight - buttonHeight - 10;
+
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        let maxX = viewportWidth - buttonWidth - 20;
+        let maxY = viewportHeight - buttonHeight - 20;
 
         let randomX = Math.random() * maxX;
         let randomY = Math.random() * maxY;
@@ -36,28 +39,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const oldX = rect.left;
         const oldY = rect.top;
 
-        // Jeśli nowa pozycja jest zbyt blisko starej, wymuszamy większy ruch
-        if (Math.abs(randomX - oldX) < 70) {
-            randomX = (randomX + 100) % maxX;
+        // Unikanie minimalnych ruchów
+        if (Math.abs(randomX - oldX) < 50) {
+            randomX = (randomX + 80) % maxX;
         }
-        if (Math.abs(randomY - oldY) < 70) {
-            randomY = (randomY + 100) % maxY;
+        if (Math.abs(randomY - oldY) < 50) {
+            randomY = (randomY + 80) % maxY;
         }
 
-        randomX = Math.max(0, Math.min(randomX, maxX));
-        randomY = Math.max(0, Math.min(randomY, maxY));
+        // Zapobieganie wyjściu poza ekran
+        randomX = Math.max(10, Math.min(randomX, maxX));
+        randomY = Math.max(10, Math.min(randomY, maxY));
 
-        noButton.style.pointerEvents = "none"; // Blokuje spam kliknięć
         noButton.style.position = "absolute";
         noButton.style.left = `${randomX}px`;
         noButton.style.top = `${randomY}px`;
-
-        setTimeout(() => {
-            noButton.style.pointerEvents = "auto"; // Przywraca działanie przycisku
-        }, 100);
     });
 
-    // Latające serca
+    // Funkcja do latających serc
     function createHeart() {
         const heart = document.createElement("div");
         heart.classList.add("heart");
