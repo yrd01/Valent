@@ -24,20 +24,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Po najechaniu na "Nie" - zmniejsza się płynnie
-    noButton.addEventListener("mouseenter", () => {
-        noSize *= 0.8; // Zmniejsz rozmiar o 20%
-        noSize = Math.max(0.3, noSize); // Nie pozwól, by był mniejszy niż 30% oryginalnego rozmiaru
-        noButton.style.transition = "transform 0.3s ease-in-out";
-        noButton.style.transform = `scale(${noSize})`;
-    });
+    // Funkcja do animacji zmiany rozmiaru
+    function animateSize(button, scale) {
+        button.style.transition = "transform 0.3s ease-in-out";
+        button.style.transform = `scale(${scale})`;
+    }
 
-    // Po najechaniu na "Tak" - rośnie płynnie
-    yesButton.addEventListener("mouseenter", () => {
-        yesSize *= 1.2; // Powiększ o 20%
-        yesSize = Math.min(2, yesSize); // Nie pozwól, by był większy niż 200% oryginalnego rozmiaru
-        yesButton.style.transition = "transform 0.3s ease-in-out";
-        yesButton.style.transform = `scale(${yesSize})`;
+    // Po najechaniu na "Nie" - zmniejsza się, a "Tak" rośnie
+    noButton.addEventListener("mouseenter", () => {
+        noSize *= 0.8; // Zmniejsz o 20%
+        noSize = Math.max(0.3, noSize); // Nie mniejsze niż 30%
+
+        yesSize *= 1.2; // Powiększ "Tak" o 20%
+        yesSize = Math.min(2, yesSize); // Nie większe niż 200%
+
+        animateSize(noButton, noSize);
+        animateSize(yesButton, yesSize);
     });
 
     // Funkcja do latających serc
