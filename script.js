@@ -24,19 +24,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Funkcja do animacji zmiany rozmiaru
-    function animateSize(button, scale) {
-        button.style.transition = "transform 0.3s ease-in-out";
-        button.style.transform = `scale(${scale})`;
+    // Funkcja do płynnej animacji zmiany rozmiaru
+    function animateSize(button, newSize) {
+        button.style.transition = "transform 0.2s ease-in-out";
+        requestAnimationFrame(() => {
+            button.style.transform = `scale(${newSize})`;
+        });
     }
 
     // Po najechaniu na "Nie" - zmniejsza się, a "Tak" rośnie
     noButton.addEventListener("mouseenter", () => {
-        noSize *= 0.8; // Zmniejsz o 20%
-        noSize = Math.max(0.3, noSize); // Nie mniejsze niż 30%
+        noSize *= 0.85; // Zmniejsz o 15%
+        noSize = Math.max(0.2, noSize); // Nie mniejsze niż 20%
 
-        yesSize *= 1.2; // Powiększ "Tak" o 20%
-        yesSize = Math.min(2, yesSize); // Nie większe niż 200%
+        yesSize *= 1.15; // Powiększ "Tak" o 15%
+        yesSize = Math.min(2.5, yesSize); // Nie większe niż 250%
 
         animateSize(noButton, noSize);
         animateSize(yesButton, yesSize);
