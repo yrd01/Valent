@@ -6,6 +6,12 @@ document.getElementById("yes").addEventListener("click", () => {
         document.querySelector(".background").style.opacity = "1";
     }, 1000);
 
+    // Zmiana napisu na "KOCHAM CIĘ"
+    document.querySelector("h1").textContent = "KOCHAM CIĘ ❤️";
+
+    // Ukrycie przycisków po kliknięciu "Tak"
+    document.querySelector(".buttons").style.display = "none";
+
     // Tworzenie większej ilości serc
     for (let i = 0; i < 30; i++) {
         createHeart();
