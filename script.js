@@ -5,53 +5,65 @@ document.addEventListener("DOMContentLoaded", () => {
     const buttonsContainer = document.querySelector(".buttons");
     const background = document.querySelector(".background");
 
-    let noSize = 1; // Początkowy rozmiar "Nie"
-    let yesSize = 1; // Początkowy rozmiar "Tak"
-
-    // Kliknięcie "Tak" - zmiana tła i napisu
+    // Zmiana na "KOCHAM CIĘ" po kliknięciu "Tak"
     yesButton.addEventListener("click", () => {
-        title.textContent = "KOCHAM CIĘ ❤️";
-        buttonsContainer.style.display = "none"; 
-
+        title.textContent = "KOCHAM CIĘ ❤️"; // Zmiana napisu
+        buttonsContainer.style.display = "none"; // Ukrycie przycisków
+        
+        // Animacja zmiany tła
         background.style.opacity = "0";
         setTimeout(() => {
             background.style.background = "url('20240809_213832.jpg') no-repeat center center/cover";
             background.style.opacity = "1";
         }, 1000);
 
+        // Dodanie latających serc
         for (let i = 0; i < 30; i++) {
             createHeart();
         }
     });
 
-    // Funkcja do płynnej animacji zmiany rozmiaru
-    function animateSize(button, newSize) {
-        button.style.transition = "transform 0.2s ease-in-out";
-        requestAnimationFrame(() => {
-            button.style.transform = `scale(${newSize})`;
-        });
-    }
-
-    // Po najechaniu na "Nie" - zmniejsza się, a "Tak" rośnie
+    // PRZYCISK "NIE" – UCIEKA, ALE NIE PRZESKAKUJE CIĄGLE
     noButton.addEventListener("mouseenter", () => {
-        noSize *= 0.85; // Zmniejsz o 15%
-        noSize = Math.max(0.2, noSize); // Nie mniejsze niż 20%
+        const buttonWidth = noButton.offsetWidth;
+        const buttonHeight = noButton.offsetHeight;
+        
+        const maxX = window.innerWidth - buttonWidth - 10; // Margines 10px
+        const maxY = window.innerHeight - buttonHeight - 10;
 
-        yesSize *= 1.15; // Powiększ "Tak" o 15%
-        yesSize = Math.min(2.5, yesSize); // Nie większe niż 250%
+        let randomX = Math.random() * maxX;
+        let randomY = Math.random() * maxY;
 
-        animateSize(noButton, noSize);
-        animateSize(yesButton, yesSize);
+        // Pobranie aktualnej pozycji
+        const rect = noButton.getBoundingClientRect();
+        const oldX = rect.left;
+        const oldY = rect.top;
+
+        // Jeśli nowa pozycja jest zbyt blisko starej, wymuszamy większy ruch
+        if (Math.abs(randomX - oldX) < 50) {
+            randomX += randomX > oldX ? 50 : -50;
+        }
+        if (Math.abs(randomY - oldY) < 50) {
+            randomY += randomY > oldY ? 50 : -50;
+        }
+
+        // Zapobieganie wyjściu poza ekran
+        randomX = Math.max(0, Math.min(randomX, maxX));
+        randomY = Math.max(0, Math.min(randomY, maxY));
+
+        noButton.style.position = "absolute";
+        noButton.style.left = `${randomX}px`;
+        noButton.style.top = `${randomY}px`;
     });
 
-    // Funkcja do latających serc
+    // Funkcja do generowania latających serc
     function createHeart() {
         const heart = document.createElement("div");
         heart.classList.add("heart");
         heart.innerHTML = "❤️";
         document.body.appendChild(heart);
 
-        const size = Math.random() * 40 + 30;
+        const size = Math.random() * 40 + 30; // Większe serca 30-70px
         const startX = Math.random() * (window.innerWidth - size);
         const startY = Math.random() * (window.innerHeight - size);
 
